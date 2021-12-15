@@ -1,4 +1,6 @@
 using System;
+using System.Reflection;
+
 using Gtk;
 using UI = Gtk.Builder.ObjectAttribute;
 
@@ -23,6 +25,11 @@ namespace SOHome.Config.Forms
             btnSave.Clicked += SaveButton_Clicked;
 
             cmbThemes.Changed += CmbThemes_Changed;
+
+            var themeDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Themes");
+            var themeNames = System.IO.Directory.GetDirectories(themeDir);
+            foreach (var themeName in themeNames)
+                cmbThemes.AppendText(System.IO.Path.GetFileName(themeName));
         }
 
         private void CmbThemes_Changed(object sender, EventArgs e)
