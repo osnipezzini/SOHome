@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SOHome.Web.Client", "SOHome
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SOHome.Web.Server", "SOHome.Web.Server\SOHome.Web.Server.csproj", "{8084C6A3-15DE-4EDA-8484-E5AA3E0B8210}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SOHome.Config.Gtk", "SOHome.Config.Gtk\SOHome.Config.Gtk.csproj", "{E960FE78-D6C3-455E-9315-A12BDB3D2B1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SOHome.Config", "SOHome.Config\SOHome.Config.csproj", "{E960FE78-D6C3-455E-9315-A12BDB3D2B1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
