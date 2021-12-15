@@ -1,6 +1,7 @@
 using System;
 using Gtk;
 
+using SOHome.Common;
 using SOHome.Config.Forms;
 
 namespace SOHome.Config
@@ -13,7 +14,7 @@ namespace SOHome.Config
             Application.Init();
             try
             {
-                Module.ApplyTheme();                 
+                Module.ApplyTheme(AppSettings.Settings.Theme);                 
             }
             catch (System.Exception ex)
             {

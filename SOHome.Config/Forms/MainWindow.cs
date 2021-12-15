@@ -1,18 +1,24 @@
-using System;
-using System.Reflection;
-
 using Gtk;
+
+using System.Linq;
+using SOHome.Common;
+using SOHome.Common.Models;
+
+using System;
+
 using UI = Gtk.Builder.ObjectAttribute;
 
 namespace SOHome.Config.Forms
 {
-    class MainWindow : Window
+    internal class MainWindow : Window
     {
-        [UI] private Entry txtDbPassword = null;
-        [UI] private Button btnSave = null;
-        [UI] private ComboBoxText cmbThemes = null;
-
-        private int _counter;
+        [UI] private readonly Entry txtDbHost = null;
+        [UI] private readonly Entry txtDbPort = null;
+        [UI] private readonly Entry txtDbName = null;
+        [UI] private readonly Entry txtDbUser = null;
+        [UI] private readonly Entry txtDbPassword = null;
+        [UI] private readonly Button btnSave = null;
+        [UI] private readonly ComboBoxText cmbThemes = null;
 
         public MainWindow() : this(new Builder("MainWindow.glade")) { }
 
@@ -28,8 +34,25 @@ namespace SOHome.Config.Forms
 
             var themeDir = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Themes");
             var themeNames = System.IO.Directory.GetDirectories(themeDir);
-            foreach (var themeName in themeNames)
-                cmbThemes.AppendText(System.IO.Path.GetFileName(themeName));
+            cmbThemes.AppendText("");
+            int index = 0;
+            int selectedIndex = 0;
+            foreach (var fullThemeName in themeNames)
+            {
+                index++;
+                var themeName = System.IO.Path.GetFileName(fullThemeName);
+                if (AppSettings.Settings.Theme == themeName)
+                    selectedIndex = index;
+                cmbThemes.AppendText(themeName);
+            }
+
+            txtDbHost.Text = AppSettings.Settings?.Database?.Host;
+            txtDbPort.Text = AppSettings.Settings?.Database?.Port;
+            txtDbName.Text = AppSettings.Settings?.Database?.Name;
+            txtDbUser.Text = AppSettings.Settings?.Database?.User;
+            txtDbPassword.Text = AppSettings.Settings?.Database?.Password;
+
+            cmbThemes.Active = selectedIndex;
         }
 
         private void CmbThemes_Changed(object sender, EventArgs e)
@@ -38,7 +61,7 @@ namespace SOHome.Config.Forms
             {
                 Module.ApplyTheme(cmbThemes.ActiveText);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageDialog md = new MessageDialog(this,
                 DialogFlags.DestroyWithParent, MessageType.Error,
@@ -48,7 +71,7 @@ namespace SOHome.Config.Forms
 
                 Module.ApplyTheme();
             }
-            
+
         }
 
         private void Window_DeleteEvent(object sender, DeleteEventArgs a)
@@ -58,8 +81,34 @@ namespace SOHome.Config.Forms
 
         private void SaveButton_Clicked(object sender, EventArgs a)
         {
-            _counter++;
-            txtDbPassword.Text = "Hello World! This button has been clicked " + _counter + " time(s).";
+            try
+            {
+                AppSettings.Settings.Theme = cmbThemes.ActiveText;
+                var database = new Database
+                {
+                    Host = txtDbHost.Text,
+                    Port = txtDbPort.Text,
+                    Name = txtDbName.Text,
+                    User = txtDbUser.Text,
+                    Password = txtDbPassword.Text
+                };
+                AppSettings.Settings.Database = database;
+                AppSettings.Save();
+
+                MessageDialog md = new MessageDialog(this,
+                DialogFlags.DestroyWithParent, MessageType.Info,
+                ButtonsType.Close, "Configurações salvas com sucesso!");
+                md.Run();
+                md.Destroy();
+            }
+            catch (Exception ex)
+            {
+                MessageDialog md = new MessageDialog(this,
+                DialogFlags.DestroyWithParent, MessageType.Error,
+                ButtonsType.Close, "Ocorreu um erro ao salvar as configurações!");
+                md.Run();
+                md.Destroy();
+            }
         }
     }
 }
