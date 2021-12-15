@@ -6,8 +6,8 @@ namespace SOHome.Config.Gtk.Forms
 {
     class MainWindow : Window
     {
-        [UI] private Label _label1 = null;
-        [UI] private Button _button1 = null;
+        [UI] private Entry txtDbPassword = null;
+        [UI] private Button btnSave = null;
 
         private int _counter;
 
@@ -16,9 +16,12 @@ namespace SOHome.Config.Gtk.Forms
         private MainWindow(Builder builder) : base(builder.GetRawOwnedObject("MainWindow"))
         {
             builder.Autoconnect(this);
+            var img = Module.GetResource("logo-sohome.svg");
+            Icon = new Gdk.Pixbuf(img);
+            //Icon = Gdk.Pixbuf.LoadFromResource("SOHome.Config.Gtk.Resources.logo-sohome.svg");
 
             DeleteEvent += Window_DeleteEvent;
-            _button1.Clicked += Button1_Clicked;
+            btnSave.Clicked += Button1_Clicked;
         }
 
         private void Window_DeleteEvent(object sender, DeleteEventArgs a)
@@ -29,7 +32,7 @@ namespace SOHome.Config.Gtk.Forms
         private void Button1_Clicked(object sender, EventArgs a)
         {
             _counter++;
-            _label1.Text = "Hello World! This button has been clicked " + _counter + " time(s).";
+            txtDbPassword.Text = "Hello World! This button has been clicked " + _counter + " time(s).";
         }
     }
 }

@@ -13,7 +13,34 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\logo-sohome.ico" />
+    <None Remove="Resources\logo-sohome.png" />
+    <None Remove="Resources\logo-sohome.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\logo-sohome.ico" />
+    <EmbeddedResource Include="Resources\logo-sohome.png" />
+    <EmbeddedResource Include="Resources\logo-sohome.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="GtkSharp" Version="3.24.24.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="SOResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SOResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="SOResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SOResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
