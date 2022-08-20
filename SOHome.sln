@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SOHome.API", "src\Server\SO
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{A0B12980-E148-4656-A85F-49B6E6CF1BDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOHome.Fitness", "SOHome.Fitness\SOHome.Fitness.csproj", "{71291996-CBCC-4804-B0BF-668C3DE0AB38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOHome.Fitness", "src\Client\SOHome.Fitness\SOHome.Fitness.csproj", "{71291996-CBCC-4804-B0BF-668C3DE0AB38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
