@@ -3,15 +3,14 @@
 using SOHome.Common.DataModels;
 using SOHome.Domain.Models;
 
-namespace SOHome.Domain.MapperProfiles
+namespace SOHome.Domain.MapperProfiles;
+
+public class UserGroupProfile : Profile
 {
-    public class UserGroupProfile : Profile
+    public UserGroupProfile()
     {
-        public UserGroupProfile()
-        {
-            CreateMap<UserGroup, UserGroupModel>()
-                .ForMember(dest => dest.Name, map => map.MapFrom(src => src.Name))
-                .ReverseMap();
-        }
+        CreateMap<UserGroup, UserGroupModel>()
+            .ForMember(dest => dest.Name, map => map.MapFrom(src => src.Name))
+            .ReverseMap();
     }
 }

@@ -1,30 +1,29 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace SOHome.Domain.Data
+namespace SOHome.Domain.Data;
+
+public interface IMigrationService
 {
-    public interface IMigrationService
+    void Migrate();
+    Task MigrateAsync();
+}
+public class MigrationService : IMigrationService
+{
+    private readonly SOHomeDbContext dbContext;
+
+    public MigrationService(SOHomeDbContext dbContext)
     {
-        void Migrate();
-        Task MigrateAsync();
+        this.dbContext = dbContext;
     }
-    public class MigrationService : IMigrationService
+
+    public void Migrate()
     {
-        private readonly SOHomeDbContext dbContext;
+       dbContext.Database.Migrate();
+    }
 
-        public MigrationService(SOHomeDbContext dbContext)
-        {
-            this.dbContext = dbContext;
-        }
-
-        public void Migrate()
-        {
-           dbContext.Database.Migrate();
-        }
-
-        public async Task MigrateAsync()
-        {
-            await dbContext.Database
-                .MigrateAsync();
-        }
+    public async Task MigrateAsync()
+    {
+        await dbContext.Database
+            .MigrateAsync();
     }
 }
