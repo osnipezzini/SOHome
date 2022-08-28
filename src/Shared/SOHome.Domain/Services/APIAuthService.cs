@@ -1,66 +1,90 @@
-﻿using Blazored.LocalStorage;
+﻿using Microsoft.Extensions.Options;
 
-using Microsoft.AspNetCore.Components.Authorization;
-
-using SOHome.Common;
 using SOHome.Common.DataModels;
 using SOHome.Common.Exceptions;
 using SOHome.Common.Interfaces;
-using SOHome.Domain.Providers;
+using SOHome.Common.Models;
 
 using System.Net;
-using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace SOHome.Domain.Services
 {
     public class APIAuthService : IAuthService
     {
         private readonly HttpClient httpClient;
-        private readonly AuthenticationStateProvider authenticationStateProvider;
-        private readonly ILocalStorageService localStorage;
+        private readonly AuthConfig authConfig;
 
-        public APIAuthService(HttpClient httpClient, AuthenticationStateProvider authenticationStateProvider,
-            ILocalStorageService localStorage)
+        public APIAuthService(HttpClient httpClient, IOptions<AuthConfig> options)
         {
             this.httpClient = httpClient;
-            this.authenticationStateProvider = authenticationStateProvider;
-            this.localStorage = localStorage;
+            authConfig = options.Value;
         }
 
         public async Task<UserDto> LoginAsync(LoginModel model)
         {
-            var userDto = await httpClient.PostAsync<UserDto>("api/account/login", model);
-            if (userDto.StatusCode == HttpStatusCode.Unauthorized)
-                throw new LoginException("Usuário ou senha inválidos!");
-            else if (userDto.StatusCode != HttpStatusCode.OK)
-                throw new HttpRequestException(userDto.Content);
+            var requestData = new Dictionary<string, string>()
+            {
+                {"client_id", authConfig.ClientId },
+                {"username", model.Username},
+                {"password", model.Password},
+                {"grant_type", "password" },
+                {"scope", "email openid profile" }
+            };
 
-            await localStorage.SetItemAsStringAsync(AppSettings.AuthToken, userDto.Value.Token);
-            ((ApiAuthenticationStateProvider)authenticationStateProvider).MarkUserAuthenticated(userDto.Value.Token);
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userDto.Value.Token);
-            return userDto.Value;
+            var realm = "master";
+            var authEndpoint = "https://auth.sodevs.xyz/";
+            var url = $"{authEndpoint}/auth/realms/{realm}/protocol/openid-connect/auth";
+            var request = await httpClient.PostAsync(url, new FormUrlEncodedContent(requestData));
+            var content = await request.Content.ReadAsStringAsync();
+            if (request.StatusCode == HttpStatusCode.Unauthorized)
+                throw new LoginException("Usuário ou senha inválidos!");
+            else if (request.StatusCode != HttpStatusCode.OK)
+                throw new HttpRequestException(content);
+
+            var userDto = JsonSerializer.Deserialize<UserDto>(content);
+            if (userDto == null)
+                throw new LoginException("Retorno inválido da API de autenticação");
+
+            return userDto;
         }
 
         public async Task LogoutAsync()
         {
-            await localStorage.RemoveItemAsync(AppSettings.AuthToken);
-            ((ApiAuthenticationStateProvider)authenticationStateProvider).MarkUserAsLoggedOut();
             httpClient.DefaultRequestHeaders.Authorization = null;
+            await Task.CompletedTask;
         }
 
-        public async Task<UserDto> RegisterAsync(RegisterModel model)
+        public async Task<UserDto> RefreshTokenAsync(string refreshToken)
         {
-            var userDto = await httpClient.PostAsync<UserDto>("api/account/register", model);
-            if (userDto.StatusCode == HttpStatusCode.Unauthorized)
-                throw new RegisterException(userDto.Content);
-            else if (userDto.StatusCode != HttpStatusCode.OK)
-                throw new HttpRequestException(userDto.Content);
+            var requestData = new Dictionary<string, string>()
+            {
+                {"client_id", authConfig.ClientId },
+                {"grant_type", "refresh_token" },
+                {"scope", "email openid profile" },
+                {"refresh_token", refreshToken }
+            };
 
-            await localStorage.SetItemAsStringAsync(AppSettings.AuthToken, userDto.Value.Token);
-            ((ApiAuthenticationStateProvider)authenticationStateProvider).MarkUserAuthenticated(userDto.Value.Token);
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userDto.Value.Token);
+            var realm = "master";
+            var authEndpoint = "https://auth.sodevs.xyz/";
+            var url = $"{authEndpoint}/auth/realms/{realm}/protocol/openid-connect/auth";
+            var request = await httpClient.PostAsync(url, new FormUrlEncodedContent(requestData));
+            var content = await request.Content.ReadAsStringAsync();
+            if (request.StatusCode == HttpStatusCode.Unauthorized)
+                throw new LoginException("Usuário ou senha inválidos!");
+            else if (request.StatusCode != HttpStatusCode.OK)
+                throw new HttpRequestException(content);
 
-            return userDto.Value;
+            var userDto = JsonSerializer.Deserialize<UserDto>(content);
+            if (userDto == null)
+                throw new LoginException("Retorno inválido da API de autenticação");
+
+            return userDto;
+        }
+
+        public Task<UserDto> RegisterAsync(RegisterModel model)
+        {
+            return Task.FromResult<UserDto>(null);
         }
     }
 }

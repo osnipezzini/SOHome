@@ -10,6 +10,7 @@ namespace SOHome.Common.DataModels
         private string email;
         private string username;
         private string token;
+        private string refreshToken;
         #endregion
         #region Propriedades
         public int Code { get => code; set => SetProperty(ref code, value); }
@@ -17,6 +18,7 @@ namespace SOHome.Common.DataModels
         public string Username { get => username; set => SetProperty(ref username, value); }
         public string Email { get => email; set => SetProperty(ref email, value); }
         public string Token { get => token; set => SetProperty(ref token, value); }
+        public string RefreshToken { get => refreshToken; set => SetProperty(ref refreshToken, value); }
         #endregion
     }
 }
