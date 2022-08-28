@@ -5,13 +5,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:SOHome.Fitness.Pages">
 
+    <TabBar>
+        <ShellContent
+        Title="Autenticação"
+        ContentTemplate="{DataTemplate local:LoginPage}"
+        Route="LoginPage" />
+    </TabBar>
+
     <ShellContent
-        Title="Home"
+        Title="Página inicial"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
-
     <ShellContent
         Title="Cadastro de Exercício"
         ContentTemplate="{DataTemplate local:RegisterExercisePage}"
         Route="RegisterExercisePage" />
+
 </Shell>

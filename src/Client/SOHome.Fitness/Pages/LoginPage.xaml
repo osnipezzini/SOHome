@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SOHome.Fitness.ViewModels"
+             x:Class="SOHome.Fitness.Pages.LoginPage"
+             x:DataType="vm:LoginViewModel"
+             Title="Autenticação">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Entrar" Command="{Binding AuthenticateCommand}" />
+    </ContentPage.ToolbarItems>
+    <VerticalStackLayout>
+        <Label 
+            Text="Para acessar o sistema é necessário realizar a autenticação"
+            HorizontalOptions="Center" />
+        <Entry Placeholder="Nome de usuário ou email" 
+               Text="{Binding Model.Username}"
+               WidthRequest="{OnIdiom Desktop=500}"
+               HorizontalTextAlignment="Center"/>
+        <Entry Placeholder="Senha" 
+               IsPassword="True" 
+               Text="{Binding Model.Password}"
+               WidthRequest="{OnIdiom Desktop=500}"
+               HorizontalTextAlignment="Center"/>
+    </VerticalStackLayout>
+</ContentPage>

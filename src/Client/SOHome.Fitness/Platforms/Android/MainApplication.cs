@@ -1,4 +1,6 @@
-﻿using Android.App;
+﻿using Acr.UserDialogs;
+
+using Android.App;
 using Android.Runtime;
 
 namespace SOHome.Fitness
@@ -9,6 +11,7 @@ namespace SOHome.Fitness
         public MainApplication(IntPtr handle, JniHandleOwnership ownership)
             : base(handle, ownership)
         {
+            UserDialogs.Init(this);
         }
 
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();

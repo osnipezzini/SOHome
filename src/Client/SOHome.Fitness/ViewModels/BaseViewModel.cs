@@ -11,5 +11,4 @@ public partial class BaseViewModel
 {
     [ObservableProperty]
     private bool isBusy;
-
 }
