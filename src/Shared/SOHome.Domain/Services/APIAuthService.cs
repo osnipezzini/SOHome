@@ -28,6 +28,15 @@ public class APIAuthService : IAuthService
         this.mapper = mapper;
         authConfig = options.Value;
     }
+    private async Task<OAuthUrls> GetOAuthUrlsAsync()
+    {
+        var realm = authConfig.Realm;
+        var authEndpoint = authConfig.Authority.EndsWith("/") ? authConfig.Authority[..^1] : authConfig.Authority;
+        var url = $"{authEndpoint}/realms/{realm}/.well-known/openid-configuration";
+
+        var oauthUrls = await httpClient.GetFromJsonAsync<OAuthUrls>(url);
+        return oauthUrls;
+    }
     private async Task<UserDto> GetUserInfo()
     {
         var realm = authConfig.Realm;
