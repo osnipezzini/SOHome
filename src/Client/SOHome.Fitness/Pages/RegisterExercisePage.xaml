@@ -5,19 +5,55 @@
              xmlns:vm="clr-namespace:SOHome.Fitness.ViewModels"
              xmlns:models="clr-namespace:SOHome.Common.Models;assembly=SOHome.Common"
              xmlns:controls="clr-namespace:SOHome.Fitness.Controls"
+             xmlns:fonts="clr-namespace:SOHome.Fitness.Fonts"
              x:Class="SOHome.Fitness.Pages.RegisterExercisePage"
              x:DataType="vm:RegisterExerciseViewModel"
-             Title="RegisterExercisePage">
+             Title="Cadastro de Exercício">
     <ContentPage.Resources>
         <ResourceDictionary>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <VerticalStackLayout>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="fas" Glyph="{x:Static fonts:FASolid.Save}" Color="LightSlateGrey"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <VerticalStackLayout Padding="10">
         <Label 
             Text="Selecione o tipo de exercício!"
             HorizontalOptions="Center" />
         <controls:EnumBindablePicker x:TypeArguments="models:ExerciseType"                                      
                                      SelectedItem="{Binding SelectedExerciseType}"/>
+        <Frame Padding="2" Margin="0,10" BackgroundColor="Transparent">
+            <Entry Text="{Binding Name}" Placeholder="Digite o nome do exercício"/>
+        </Frame>
+        <Frame Padding="2" Margin="0,10" BackgroundColor="Transparent" HeightRequest="150">
+            <ScrollView>
+                <Editor Text="{Binding Description}" Placeholder="Digite a descrição do exercício" HorizontalOptions="FillAndExpand"/>
+            </ScrollView>
+        </Frame>
+        <Frame Padding="2" Margin="0,10" BackgroundColor="Transparent">
+            <Grid ColumnDefinitions="*,50" HorizontalOptions="FillAndExpand">
+                <CollectionView ItemsSource="{Binding Images}" HorizontalOptions="FillAndExpand" Grid.Column="0" FlowDirection="LeftToRight" >
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding .}" HeightRequest="250" Margin="3,0"/>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <ImageButton Grid.Column="1" Command="{Binding SelectImagesCommand}" Padding="10">
+                    <ImageButton.Source>
+                        <FontImageSource FontFamily="fas" Glyph="{x:Static fonts:FASolid.Images}" Color="DarkSlateGrey"/>
+                    </ImageButton.Source>
+                </ImageButton>
+            </Grid>
+        </Frame>
 
     </VerticalStackLayout>
+
 </ContentPage>

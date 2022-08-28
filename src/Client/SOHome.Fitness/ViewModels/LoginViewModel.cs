@@ -34,7 +34,7 @@ public partial class LoginViewModel : BaseViewModel
         try
         {
 #if !WINDOWS
-            using var loading = UserDialogs.Instance.Loading("Autenticando usuário");
+            //using var loading = UserDialogs.Instance.Loading("Autenticando usuário");
 #endif
             var userDto = await authAPI.Authenticate(Model);
             userProvider.User = userDto;

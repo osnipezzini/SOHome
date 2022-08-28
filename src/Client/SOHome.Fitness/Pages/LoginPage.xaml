@@ -14,12 +14,10 @@
             HorizontalOptions="Center" />
         <Entry Placeholder="Nome de usuário ou email" 
                Text="{Binding Model.Username}"
-               WidthRequest="{OnIdiom Desktop=500}"
                HorizontalTextAlignment="Center"/>
         <Entry Placeholder="Senha" 
                IsPassword="True" 
                Text="{Binding Model.Password}"
-               WidthRequest="{OnIdiom Desktop=500}"
                HorizontalTextAlignment="Center"/>
     </VerticalStackLayout>
 </ContentPage>
