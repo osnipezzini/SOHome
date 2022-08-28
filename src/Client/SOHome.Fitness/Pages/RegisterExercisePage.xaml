@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:SOHome.Fitness.ViewModels"
+             xmlns:models="clr-namespace:SOHome.Common.Models;assembly=SOHome.Common"
+             xmlns:controls="clr-namespace:SOHome.Fitness.Controls"
+             x:Class="SOHome.Fitness.Pages.RegisterExercisePage"
+             x:DataType="vm:RegisterExerciseViewModel"
+             Title="RegisterExercisePage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <VerticalStackLayout>
+        <Label 
+            Text="Selecione o tipo de exercício!"
+            HorizontalOptions="Center" />
+        <controls:EnumBindablePicker x:TypeArguments="models:ExerciseType"                                      
+                                     SelectedItem="{Binding SelectedExerciseType}"/>
+
+    </VerticalStackLayout>
+</ContentPage>

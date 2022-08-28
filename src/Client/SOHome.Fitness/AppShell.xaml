@@ -3,12 +3,15 @@
     x:Class="SOHome.Fitness.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:SOHome.Fitness"
-    Shell.FlyoutBehavior="Disabled">
+    xmlns:local="clr-namespace:SOHome.Fitness.Pages">
 
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
+    <ShellContent
+        Title="Cadastro de Exercício"
+        ContentTemplate="{DataTemplate local:RegisterExercisePage}"
+        Route="RegisterExercisePage" />
 </Shell>
