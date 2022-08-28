@@ -7,8 +7,11 @@ using SOHome.Common.Exceptions;
 using SOHome.Common.Interfaces;
 using SOHome.Common.Models;
 using SOHome.Domain.Models;
+using SOHome.Domain.Responses;
 
 using System.Net;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace SOHome.Domain.Services;
@@ -25,7 +28,15 @@ public class APIAuthService : IAuthService
         this.mapper = mapper;
         authConfig = options.Value;
     }
+    private async Task<UserDto> GetUserInfo()
+    {
+        var realm = authConfig.Realm;
+        var authEndpoint = authConfig.Authority.EndsWith("/") ? authConfig.Authority[..^1] : authConfig.Authority;
+        var url = $"{authEndpoint}/realms/{realm}/protocol/openid-connect/userinfo";
 
+        var userInfo = await httpClient.GetFromJsonAsync<UserInfo>(url);
+        return mapper.Map<UserDto>(userInfo);
+    }
     public async Task<UserDto> LoginAsync(LoginModel model)
     {
         var requestData = new Dictionary<string, string>()
@@ -51,7 +62,12 @@ public class APIAuthService : IAuthService
         if (token == null)
             throw new LoginException("Retorno inválido da API de autenticação");
 
-        return mapper.Map<UserDto>(token);
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.AccessToken);
+
+        var userDto = await GetUserInfo();
+        mapper.Map(token, userDto);
+
+        return userDto;
     }
 
     public async Task LogoutAsync()
@@ -83,6 +99,8 @@ public class APIAuthService : IAuthService
         var token = JsonSerializer.Deserialize<OpenIdToken>(content);
         if (token == null)
             throw new LoginException("Retorno inválido da API de autenticação");
+
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.AccessToken);
 
         return mapper.Map<UserDto>(token);
     }
