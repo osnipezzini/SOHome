@@ -33,6 +33,7 @@ public class SOHomeDbContext : DbContext
         modelBuilder.HasSequence("grid_seq");
         modelBuilder.HasSequence("person_code_seq");
         modelBuilder.HasSequence("product_code_seq");
+        modelBuilder.HasSequence("exercise_code_seq");
 
         // Configuração da tabela de pessoas
         var personEntity = modelBuilder.Entity<Person>();
@@ -46,6 +47,13 @@ public class SOHomeDbContext : DbContext
         productEntity.Property(x => x.Id)
         .HasDefaultValueSql("NEXTVAL('grid_seq')");
         productEntity.Property(x => x.Code)
+            .HasDefaultValueSql("NEXTVAL('product_code_seq')");
+
+        // Configuração da tabela de exercicios
+        var exerciseEntity = modelBuilder.Entity<Exercise>();
+        exerciseEntity.Property(x => x.Id)
+        .HasDefaultValueSql("NEXTVAL('grid_seq')");
+        exerciseEntity.Property(x => x.Code)
             .HasDefaultValueSql("NEXTVAL('product_code_seq')");
     }
 }

@@ -1,6 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+
 using SOHome.API.Extensions;
 using SOHome.Application;
 using SOHome.Common.Models;
+using SOHome.Domain.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +15,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 builder.Services.RegisterDomainServices();
 builder.Services.RegisterHandlers();
+
+builder.Services.AddDbContext<SOHomeDbContext>(opt =>
+{
+    opt
+    .UseSnakeCaseNamingConvention()
+    .UseNpgsql(builder.Configuration.GetValue<string>("DbConnection"), b => b.MigrationsAssembly("SOHome.API"));
+});
 
 builder.Services.Configure<AuthConfig>(builder.Configuration.GetSection("OAuth"));
 
