@@ -6,6 +6,7 @@ using SOHome.Common.RefitServices;
 using SOHome.Fitness.Models;
 using SOHome.Fitness.Pages;
 using SOHome.Fitness.ViewModels;
+using System.Reflection;
 
 namespace SOHome.Fitness
 {
@@ -23,14 +24,13 @@ namespace SOHome.Fitness
                 fonts.AddFont("fa-regular-400.ttf", "far");
             }).UseMauiCommunityToolkit();
 
+            foreach (var app in typeof(MauiProgram).Assembly.GetTypes().Where(x => x.IsSubclassOf(typeof(BaseViewModel)) || x.IsSubclassOf(typeof(Page))))
+            {
+                builder.Services.AddTransient(app);
+            } 
+
             builder.Services
-                .AddSingleton<UserProvider>()
-                .AddTransient<MainPage>()
-                .AddTransient<RegisterExercisePage>()
-                .AddTransient<LoginPage>()
-                .AddTransient<LoginViewModel>()
-                .AddTransient<MainViewModel>()
-                .AddTransient<RegisterExerciseViewModel>();
+                .AddSingleton<UserProvider>();
 
             builder.Services.AddRefitClient<IAuthAPI>()
                 .ConfigureHttpClient(http =>
