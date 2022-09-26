@@ -3,7 +3,24 @@
     x:Class="SOHome.Fitness.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:SOHome.Fitness.Pages">
+    xmlns:local="clr-namespace:SOHome.Fitness.Pages"
+    xmlns:routes="clr-namespace:SOHome.Fitness">
+
+
+
+    <ShellContent
+        Title="Página inicial"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route= "{x:Static routes:Routes.MainPage}" />
+    <ShellContent
+        Title="Exercícios"
+        ContentTemplate="{DataTemplate local:ExercisesPage}"
+        Route="{x:Static routes:Routes.ExercisesPage}" />
+    <ShellContent
+        Title="Meus Exercícios"
+        ContentTemplate="{DataTemplate local:MyExercisesPage}"
+        Route="{x:Static routes:Routes.MyExercises}"/>
+
 
     <TabBar>
         <ShellContent
@@ -11,14 +28,5 @@
         ContentTemplate="{DataTemplate local:LoginPage}"
         Route="LoginPage" />
     </TabBar>
-
-    <ShellContent
-        Title="Página inicial"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-    <ShellContent
-        Title="Cadastro de Exercício"
-        ContentTemplate="{DataTemplate local:RegisterExercisePage}"
-        Route="RegisterExercisePage" />
 
 </Shell>

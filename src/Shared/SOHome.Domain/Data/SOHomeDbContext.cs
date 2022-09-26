@@ -17,6 +17,7 @@ public class SOHomeDbContext : DbContext
 
     public DbSet<Person> People => Set<Person>();
     public DbSet<Product> Products => Set<Product>();
+    public DbSet<Exercise> Exercises => Set<Exercise>();
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
