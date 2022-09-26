@@ -2,8 +2,9 @@ namespace SOHome.Fitness.Pages;
 
 public partial class ExercisesPage : ContentPage
 {
-	public ExercisesPage()
+	public ExercisesPage(ExercisesViewModel viewModel)
 	{
 		InitializeComponent();
+		BindingContext = viewModel;
 	}
 }

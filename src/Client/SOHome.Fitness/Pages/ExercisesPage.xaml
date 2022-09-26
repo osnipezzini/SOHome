@@ -5,7 +5,7 @@
              xmlns:fontes="clr-namespace:SOHome.Fitness.Fonts"
              Title="ExercisesPage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding GoToCreateExercisePage }">
+        <ToolbarItem Command="{Binding GoToCreateExercisePageCommand}">
             <ToolbarItem.IconImageSource>
                 <FontImageSource Glyph="{x:Static fontes:FASolid.PlusCircle}" FontFamily="fas"/>
             </ToolbarItem.IconImageSource>
