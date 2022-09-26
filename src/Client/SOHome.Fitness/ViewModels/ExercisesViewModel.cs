@@ -1,11 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using SOHome.Common.DataModels;
+using SOHome.Common.Services;
 using System.Collections.ObjectModel;
 
 namespace SOHome.Fitness.ViewModels;
 
 public partial class ExercisesViewModel : BaseViewModel
 {
+    private readonly IExerciseService exerciseService;
+
     [RelayCommand]
     async Task GoToCreateExercisePage()
     {
@@ -13,14 +16,21 @@ public partial class ExercisesViewModel : BaseViewModel
     }
     public ObservableCollection<ExerciseDto> Exercises { get; }
 
-    public ExercisesViewModel()
+    public ExercisesViewModel(IExerciseService exerciseService)
     {
         Exercises = new();
+        this.exerciseService = exerciseService;
     }
 
-    public Task Init()
+    public async Task Init()
     {
-        return Task.CompletedTask;
+        var exercises = await exerciseService.GetExercises();
+        Exercises.Clear();
+        foreach (var item in exercises)
+        {
+            Exercises.Add(item);
+        }
+
     }
 
 }
