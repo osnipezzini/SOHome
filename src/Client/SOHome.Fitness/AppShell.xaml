@@ -6,7 +6,12 @@
     xmlns:local="clr-namespace:SOHome.Fitness.Pages"
     xmlns:routes="clr-namespace:SOHome.Fitness">
 
-
+    <TabBar>
+        <ShellContent
+        Title="Autenticação"
+        ContentTemplate="{DataTemplate local:LoginPage}"
+        Route="LoginPage" />
+    </TabBar>
 
     <ShellContent
         Title="Página inicial"
@@ -20,13 +25,4 @@
         Title="Meus Exercícios"
         ContentTemplate="{DataTemplate local:MyExercisesPage}"
         Route="{x:Static routes:Routes.MyExercises}"/>
-
-
-    <TabBar>
-        <ShellContent
-        Title="Autenticação"
-        ContentTemplate="{DataTemplate local:LoginPage}"
-        Route="LoginPage" />
-    </TabBar>
-
 </Shell>
