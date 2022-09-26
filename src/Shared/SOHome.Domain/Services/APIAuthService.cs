@@ -54,13 +54,24 @@ public class APIAuthService : IAuthService
             {"username", model.Username},
             {"password", model.Password},
             {"grant_type", "password" },
+            {"totp", model.TOTP },
             {"scope", "email openid profile" }
         };
 
         var realm = authConfig.Realm;
         var authEndpoint = authConfig.Authority.EndsWith("/") ? authConfig.Authority[..^1] : authConfig.Authority;
-        var url = $"{authEndpoint}/realms/{realm}/protocol/openid-connect/token";
-        var request = await httpClient.PostAsync(url, new FormUrlEncodedContent(requestData));
+        var url = new Uri($"{authEndpoint}/realms/{realm}/protocol/openid-connect/token");
+        var httpMessage = new HttpRequestMessage(HttpMethod.Post, url);
+        httpMessage.Headers.Clear();
+        httpMessage.Headers.Add("Host", url.Host);
+        httpMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
+        httpMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+        httpMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+        httpMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+
+        httpMessage.Content = new FormUrlEncodedContent(requestData);
+
+        var request = await httpClient.SendAsync(httpMessage);
         var content = await request.Content.ReadAsStringAsync();
         if (request.StatusCode == HttpStatusCode.Unauthorized)
             throw new LoginException("Usuário ou senha inválidos!");
@@ -97,8 +108,18 @@ public class APIAuthService : IAuthService
 
         var realm = authConfig.Realm;
         var authEndpoint = authConfig.Authority.EndsWith("/") ? authConfig.Authority[..^1] : authConfig.Authority;
-        var url = $"{authEndpoint}/realms/{realm}/protocol/openid-connect/token";
-        var request = await httpClient.PostAsync(url, new FormUrlEncodedContent(requestData));
+        var url = new Uri($"{authEndpoint}/realms/{realm}/protocol/openid-connect/token");
+        var httpMessage = new HttpRequestMessage(HttpMethod.Post, url);
+        httpMessage.Headers.Clear();
+        httpMessage.Headers.Add("Host", url.Host);
+        httpMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("br"));
+        httpMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+        httpMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+        httpMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+
+        httpMessage.Content = new FormUrlEncodedContent(requestData);
+
+        var request = await httpClient.SendAsync(httpMessage);
         var content = await request.Content.ReadAsStringAsync();
         if (request.StatusCode == HttpStatusCode.Unauthorized)
             throw new LoginException("Usuário ou senha inválidos!");
