@@ -2,6 +2,7 @@
 
 using Microsoft.EntityFrameworkCore;
 
+using SOHome.Common.DataModels;
 using SOHome.Common.DataModels.Requests;
 using SOHome.Common.DataModels.Responses;
 using SOHome.Common.Exceptions;
@@ -39,6 +40,18 @@ namespace SOHome.Domain.Services
             await dbContext.SaveChangesAsync();
 
             return mapper.Map<ExerciseResponse>(exercise);
+        }
+
+        public async Task<List<ExerciseDto>> GetExercises(CancellationToken cancellationToken = default)
+        {
+            var exercises = await dbContext.Exercises
+                .ToArrayAsync(cancellationToken);
+
+            var exercisesDto = new List<ExerciseDto>();
+            foreach (var exercise in exercises)
+                exercisesDto.Add(mapper.Map<ExerciseDto>(exercise));
+
+            return exercisesDto;
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SOHome.Domain.Data;
@@ -12,9 +13,10 @@ using SOHome.Domain.Data;
 namespace SOHome.API.Migrations
 {
     [DbContext(typeof(SOHomeDbContext))]
-    partial class SOHomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220926215936_CreateExerciseTable")]
+    partial class CreateExerciseTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
