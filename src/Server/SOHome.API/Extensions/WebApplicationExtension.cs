@@ -32,6 +32,13 @@ public static class WebApplicationExtension
             .WithName(routeName);
         return app;
     }
+    public static WebApplication MediatePost<TRequest>(this WebApplication app, string template, string routeName)
+        where TRequest : IRequest
+    {
+        app.MapPost(template, ([FromServices] IMediator mediator, [FromBody] TRequest request) => mediator.Send(request))
+            .WithName(routeName);
+        return app;
+    }
     public static WebApplication MediatePut<TRequest, TResponse>(this WebApplication app, string template)
         where TRequest : IRequest<TResponse>
     {

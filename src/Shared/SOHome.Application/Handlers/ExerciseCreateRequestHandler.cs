@@ -6,7 +6,7 @@ using SOHome.Common.Services;
 
 namespace SOHome.Application.Handlers
 {
-    internal class ExerciseCreateRequestHandler : IRequestHandler<ExerciseCreateModel, ExerciseResponse>
+    internal class ExerciseCreateRequestHandler : IRequestHandler<ExerciseCreateModel>
     {
         private readonly IExerciseService exerciseService;
 
@@ -14,9 +14,10 @@ namespace SOHome.Application.Handlers
         {
             this.exerciseService = exerciseService;
         }
-        public Task<ExerciseResponse> Handle(ExerciseCreateModel request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(ExerciseCreateModel request, CancellationToken cancellationToken)
         {
-            return exerciseService.CreateExercise(request, cancellationToken);
+            await exerciseService.CreateExercise(request, cancellationToken);
+            return Unit.Value;
         }
     }
 }

@@ -42,6 +42,18 @@ namespace SOHome.Domain.Services
             return mapper.Map<ExerciseResponse>(exercise);
         }
 
+        public async Task<ExerciseDto?> GetExercise(string id)
+        {
+            var exercise = await dbContext.Exercises
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (exercise is null)
+                return null;
+
+            return mapper.Map<ExerciseDto>(exercise);
+        }
+
         public async Task<List<ExerciseDto>> GetExercises(CancellationToken cancellationToken = default)
         {
             var exercises = await dbContext.Exercises
@@ -52,6 +64,45 @@ namespace SOHome.Domain.Services
                 exercisesDto.Add(mapper.Map<ExerciseDto>(exercise));
 
             return exercisesDto;
+        }
+
+        public async Task Remove(int code)
+        {
+            var exercise = await dbContext.Exercises
+                .Where(x => x.Code == code)
+                .FirstOrDefaultAsync();
+
+            if (exercise is null)
+                return;
+
+            dbContext.Remove(exercise);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateService(string id, ExerciseEditModel editModel)
+        {
+            var exercise = await dbContext.Exercises
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (exercise is null)
+                return;
+
+            mapper.Map(editModel, exercise);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateService(int code, ExerciseEditModel editModel)
+        {
+            var exercise = await dbContext.Exercises
+                .Where(x => x.Code == code)
+                .FirstOrDefaultAsync();
+
+            if (exercise is null)
+                return;
+
+            mapper.Map(editModel, exercise);
+            await dbContext.SaveChangesAsync();
         }
     }
 }
