@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 using SOHome.Common.DataModels;
@@ -16,11 +17,13 @@ namespace SOHome.Domain.Services
     {
         private readonly SOHomeDbContext dbContext;
         private readonly IMapper mapper;
+        private readonly HttpContext httpContext;
 
-        public ExerciseService(SOHomeDbContext dbContext, IMapper mapper)
+        public ExerciseService(SOHomeDbContext dbContext, IMapper mapper, IHttpContextAccessor contextAccessor)
         {
             this.dbContext = dbContext;
             this.mapper = mapper;
+            httpContext = contextAccessor.HttpContext;
         }
         public async Task<ExerciseResponse> CreateExercise(ExerciseCreateModel createModel, CancellationToken cancellationToken = default)
         {
@@ -28,16 +31,19 @@ namespace SOHome.Domain.Services
             if (createModel.Code.HasValue)
                 exercise = await dbContext.Exercises
                     .Where(exercise => exercise.Code == createModel.Code)
-                    .FirstOrDefaultAsync();
+                    .FirstOrDefaultAsync(cancellationToken: cancellationToken);
 
             if (exercise is not null)
                 throw new ExerciseConflictException("Um exercício com o código informado já existe no sistema.");
 
             exercise = mapper.Map<Exercise>(createModel);
+            var userId = httpContext.User.FindFirst("jti");
+            if (userId is not null)
+                exercise.UserId = userId.Value;
 
             dbContext.Exercises.Add(exercise);
 
-            await dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync(cancellationToken);
 
             return mapper.Map<ExerciseResponse>(exercise);
         }

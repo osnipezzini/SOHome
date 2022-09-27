@@ -2,10 +2,9 @@
 using SOHome.Common.DataModels.Requests;
 using SOHome.Common.DataModels.Responses;
 using SOHome.Common.RefitServices;
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,6 +23,11 @@ public class ExerciseAPIService : IExerciseService
         throw new NotImplementedException();
     }
 
+    public Task<ExerciseDto> GetExercise(string id)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<List<ExerciseDto>> GetExercises(CancellationToken cancellationToken = default)
     {
         try
@@ -35,5 +39,19 @@ public class ExerciseAPIService : IExerciseService
             return new();
         }
     }
-    
+
+    public Task Remove(int code)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task UpdateService(string id, ExerciseEditModel editModel)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task UpdateService(int code, ExerciseEditModel editModel)
+    {
+        throw new NotImplementedException();
+    }
 }
