@@ -16,13 +16,13 @@
     <ShellContent
         Title="Página inicial"
         ContentTemplate="{DataTemplate local:MainPage}"
-        Route= "{x:Static routes:Routes.MainPage}" />
+        Route= "MainPage" />
     <ShellContent
         Title="Exercícios"
         ContentTemplate="{DataTemplate local:ExercisesPage}"
-        Route="{x:Static routes:Routes.ExercisesPage}" />
+        Route="ExercisesPage" />
     <ShellContent
         Title="Meus Exercícios"
         ContentTemplate="{DataTemplate local:MyExercisesPage}"
-        Route="{x:Static routes:Routes.MyExercises}"/>
+        Route="MyExercisesPage"/>
 </Shell>

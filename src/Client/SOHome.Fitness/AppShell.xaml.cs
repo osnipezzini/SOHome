@@ -1,13 +1,10 @@
-﻿using SOHome.Fitness.Pages;
+﻿namespace SOHome.Fitness;
 
-namespace SOHome.Fitness
+public partial class AppShell : Shell
 {
-    public partial class AppShell : Shell
+    public AppShell()
     {
-        public AppShell()
-        {
-            InitializeComponent();
-            Routing.RegisterRoute(Routes.RegisterExercise, typeof(RegisterExercisePage));
-        }
+        InitializeComponent();
+        Routing.RegisterRoute(typeof(RegisterExercisePage));
     }
 }

@@ -26,6 +26,8 @@ namespace SOHome.Fitness
 
             foreach (var app in typeof(MauiProgram).Assembly.GetTypes().Where(x => x.IsSubclassOf(typeof(BaseViewModel)) || x.IsSubclassOf(typeof(Page))))
             {
+                if (app.Name == nameof(BaseViewModel) || app.Name == nameof(Page))
+                    continue;
                 builder.Services.AddTransient(app);
             } 
 
@@ -33,6 +35,13 @@ namespace SOHome.Fitness
                 .AddSingleton<UserProvider>();
 
             builder.Services.AddRefitClient<IAuthAPI>()
+                .ConfigureHttpClient(http =>
+                {
+                    http.BaseAddress = new Uri("https://api.sodevs.xyz");
+                    http.DefaultRequestHeaders.Add("x-client-id", "sohome-fitness");
+                });
+
+            builder.Services.AddRefitClient<IExerciseAPI>()
                 .ConfigureHttpClient(http =>
                 {
                     http.BaseAddress = new Uri("https://api.sodevs.xyz");

@@ -66,34 +66,4 @@
 	  <ProjectReference Include="..\..\Shared\SOHome.Common\SOHome.Common.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Compile Update="Pages\MyExercisesPage.xaml.cs">
-	    <DependentUpon>MyExercisesPage.xaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Pages\RegisterExercisePage.xaml.cs">
-	    <DependentUpon>RegisterExercisePage.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="Pages\ExercisesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\LoginPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\MainPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\MyExercisesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\MyPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\RegisterExercisePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	</ItemGroup>
-
 </Project>

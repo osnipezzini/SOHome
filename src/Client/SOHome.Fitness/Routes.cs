@@ -1,9 +1,10 @@
 ﻿namespace SOHome.Fitness;
 
-internal class Routes
+public class Routes
 {
-    public const string ExercisesPage = "exercises";
+    public const string ExercisesPage = nameof(ExercisesPage);
+    public const string RegisterExercisePage = nameof(RegisterExercisePage);
+    public const string LoginPage = nameof(LoginPage);
+    public const string MyExercisesPage = nameof(MyExercisesPage);
     public const string MainPage = nameof(MainPage);
-    public const string RegisterExercise = "exercises_add";
-    public const string MyExercises = "my_exercises";
 }

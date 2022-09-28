@@ -7,8 +7,7 @@ public partial class ExercisesPage : ContentPage
 	public ExercisesPage(ExercisesViewModel viewModel)
 	{
 		InitializeComponent();
-		BindingContext = viewModel;
-		this.viewModel = viewModel;
+		BindingContext = this.viewModel = viewModel;		
 	}
 	protected override async void OnAppearing()
 	{

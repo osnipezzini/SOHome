@@ -1,13 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+
 using SOHome.Common.Models;
-using System;
-using System.Collections.Generic;
+
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SOHome.Fitness.ViewModels;
 
@@ -40,7 +36,7 @@ public partial class RegisterExerciseViewModel : BaseViewModel
         foreach (var fileResult in fileResults)
         {
             var image = ImageSource.FromFile(fileResult.FullPath);
-            Images.Add(image); 
+            Images.Add(image);
 
         }
     }

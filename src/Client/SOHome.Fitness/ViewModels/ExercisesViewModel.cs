@@ -12,7 +12,7 @@ public partial class ExercisesViewModel : BaseViewModel
     [RelayCommand]
     async Task GoToCreateExercisePage()
     {
-        await Shell.Current.GoToAsync(Routes.RegisterExercise);
+        await Shell.Current.GoToAsync(Routes.RegisterExercisePage);
     }
     public ObservableCollection<ExerciseDto> Exercises { get; }
 

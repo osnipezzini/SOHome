@@ -2,11 +2,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:SOHome.Fitness.ViewModels"
+             xmlns:fontes="clr-namespace:SOHome.Fitness.Fonts"
              x:Class="SOHome.Fitness.Pages.LoginPage"
              x:DataType="vm:LoginViewModel"
              Title="Autenticação">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Entrar" Command="{Binding AuthenticateCommand}" />
+        <ToolbarItem Text="Entrar" Command="{Binding AuthenticateCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{x:Static fontes:FASolid.SignInAlt}" FontFamily="fas"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
     <VerticalStackLayout>
         <Label 
