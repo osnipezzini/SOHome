@@ -12,6 +12,7 @@ namespace SOHome.Domain.MapperProfiles
         public ExerciseProfile()
         {
             CreateMap<ExerciseCreateModel, Exercise>();
+            CreateMap<ExerciseEditModel, Exercise>();
             CreateMap<Exercise, ExerciseResponse>();
             CreateMap<Exercise, ExerciseDto>();
         }

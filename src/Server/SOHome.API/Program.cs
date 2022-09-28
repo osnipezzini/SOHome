@@ -2,15 +2,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
-using Polly;
-
 using SOHome.API.Extensions;
 using SOHome.Application;
 using SOHome.Common.Models;
 using SOHome.Domain.Data;
 
 using System.Net;
-using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 

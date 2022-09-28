@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using SOHome.Common.DataModels;
@@ -43,7 +42,6 @@ public class ExercisesController : ControllerBase
         await exerciseService.CreateExercise(createModel);
     }
 
-    // PUT api/<ExercisesController>/5
     [HttpPut("{code}")]
     public async Task Put(int code, [FromBody] ExerciseEditModel editModel)
     {
@@ -51,7 +49,6 @@ public class ExercisesController : ControllerBase
         await exerciseService.UpdateService(code, editModel);
     }
 
-    // DELETE api/<ExercisesController>/5
     [HttpDelete("{code}")]
     public async Task Delete(int code)
     {
